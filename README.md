@@ -2,7 +2,17 @@
 
 _NPM Module Boilerplate based_
 
+## Install
+
+```
+yarn add interpolate-by-pravosleva
+```
+
 ## Usage samples
+
+```javascript
+import interpolate from 'interpolate-by-pravosleva';
+```
 
 ### Linear interpolation example
 ```javascript

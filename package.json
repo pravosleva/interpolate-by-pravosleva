@@ -1,6 +1,6 @@
 {
   "name": "interpotale-by-pravosleva",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Boilerplate for npm modules with ES6 features and syntax",
   "main": "./lib/index.js",
   "scripts": {
