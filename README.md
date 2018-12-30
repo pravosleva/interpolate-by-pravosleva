@@ -10,12 +10,10 @@ yarn add interpolate-by-pravosleva
 
 ## Usage samples
 
-```javascript
-import interpolate from 'interpolate-by-pravosleva';
-```
-
 ### Linear interpolation example
 ```javascript
+import interpolate from 'interpolate-by-pravosleva';
+
 console.log( interpolate.linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 }) );
 // 1.5
 ```
@@ -35,6 +33,8 @@ y1= 1     o
 
 ### Bilinear interpolation example
 ```javascript
+import interpolate from 'interpolate-by-pravosleva';
+
 console.log(
   interpolate.bilinear ({
     x: 3,
@@ -70,6 +70,8 @@ And also, you can read more about bilinear interpolation [on wiki](https://ru.wi
 
 ### Interpolate by table (only internal table values):
 ```javascript
+import interpolate from 'interpolate-by-pravosleva';
+
 let temperature = -21.0,
   percentage = 20.0,
   dataObj = [
