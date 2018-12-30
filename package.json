@@ -1,6 +1,6 @@
 {
-  "name": "interpotale-by-pravosleva",
-  "version": "1.1.5",
+  "name": "interpolate-by-pravosleva",
+  "version": "2.0.0",
   "description": "Interpolation math fns",
   "main": "./lib/index.js",
   "scripts": {
