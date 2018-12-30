@@ -1,4 +1,4 @@
-# interpotale-by-pravosleva
+# interpolate-by-pravosleva
 
 _NPM Module Boilerplate based_
 
@@ -14,7 +14,9 @@ yarn add interpolate-by-pravosleva
 ```javascript
 import interpolate from 'interpolate-by-pravosleva';
 
-console.log( interpolate.linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 }) );
+console.log(
+  interpolate.linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 })
+);
 // 1.5
 ```
 
