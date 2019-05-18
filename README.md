@@ -6,14 +6,27 @@
 $ yarn add interpolate-by-pravosleva
 ```
 
-## Usage samples
+## Interpolation cases usage
 
-### Linear interpolation example
 ```javascript
-import interpolate from 'interpolate-by-pravosleva';
+import Interpolate from 'interpolate-by-pravosleva';
 
+// Or any static method of the class if necessary:
+import { linear } from 'interpolate-by-pravosleva';
+```
+
+_So, you can use methods below_
+
+- [linear](#linear) by `{ x, x1, y1, x2, y2 }`
+- [bilinear](#bilinear) by `{ x, y, x1, y1, x2, y2, q11, q12, q21, q22 }`
+- [byInternalTable](#byInternalTable) by `{ x, y, tableAsDoubleArray }`
+- [getKB](#getKB) (auxiliary) for condition like `y=kx+b` by `{ x1, y1, x2, y2 }`
+
+### linear
+
+```javascript
 console.log(
-  interpolate.linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 })
+  Interpolate.linear({ x: 0.5, x1: 0, y1: 1, x2: 1, y2: 2 })
 );
 // 1.5
 ```
@@ -28,25 +41,18 @@ y= ?      |             o
 y1= 1     o
           |
           ------------------------------------
-          x1= 0         x=0.5         x2= 1
+          x1= 0         x= 0.5        x2= 1
 ```
 
-### Bilinear interpolation example
-```javascript
-import interpolate from 'interpolate-by-pravosleva';
+### bilinear
 
+```javascript
 console.log(
-  interpolate.bilinear ({
-    x: 3,
-    y: 3.5,
-    x1: 1,
-    y1: 1,
-    x2: 6,
-    y2: 5,
-    q11: 210,
-    q12: 590,
-    q21: 210,
-    q22: 590,
+  Interpolate.bilinear ({
+    x: 3, y: 3.5,
+    x1: 1, y1: 1,
+    x2: 6, y2: 5,
+    q11: 210, q12: 590, q21: 210, q22: 590,
   })
 );
 // 362
@@ -54,41 +60,60 @@ console.log(
 
 _This example description_
 ```
-          |   q12= 590                q22= 590
+          |   q12= 410                q22= 590
 y2= 5     |   o                       o
           |
           |           q= ? (362 will be found)
 y= 3.5    |           o
           |
-          |   q11= 210                q21= 210
+          |   q11= 400                q21= 210
 y1= 1     |   o                       o
           ------------------------------------
-              x1= 1   x=3             x2= 6
+              x1= 1   x= 3            x2= 6
 ```
 
 And also, you can read more about bilinear interpolation [on wiki](https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D0%BB%D0%B8%D0%BD%D0%B5%D0%B9%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BF%D0%BE%D0%BB%D1%8F%D1%86%D0%B8%D1%8F "About bilinear interpolation").
 
-### Interpolate by table (only internal table values):
-```javascript
-import interpolate from 'interpolate-by-pravosleva';
+### byInternalTable
 
-let temperature = -21.0,
-  percentage = 20.0,
-  dataObj = [
-    [0.0,   -30,      -20.0,    -10.0,    0.0,     20.0,  40.0,    60.0,    80.0,    100.0],
-    [0.0,   4.19,     4.19,     4.19,     4.19,    4.19,  4.19,    4.19,    4.19,    4.19],
-    [25.0,  3.93000,  3.93000,  3.93,     3.95,    3.98,  4.00,    4.03,    4.05,    4.08],
-    [37.0,  3.68000,  3.68,     3.70000,  3.72,    3.77,  3.82,    3.88,    3.94,    4.00],
-    [45.0,  3.49000,  3.49,     3.52,     3.56,    3.62,  3.69,    3.76,    3.82,    3.89],
-  ];
+_Interpolate by table (only internal table values) for example_
+
+```javascript
+const temperature = -21.0;
+const percentage = 20.0;
+/*
+  About table below:
+  1st horizontal line (highest row) - temperature conditions template
+  1st vertical column (first left column) - percentage conditions template
+*/
+const dataObj = [
+  [0.0,   -30,      -20.0,    -10.0,    0.0,     20.0,  40.0,    60.0,    80.0,    100.0],
+  [0.0,   4.19,     4.19,     4.19,     4.19,    4.19,  4.19,    4.19,    4.19,    4.19],
+  [25.0,  3.93000,  3.93000,  3.93,     3.95,    3.98,  4.00,    4.03,    4.05,    4.08],
+  [37.0,  3.68000,  3.68,     3.70000,  3.72,    3.77,  3.82,    3.88,    3.94,    4.00],
+  [45.0,  3.49000,  3.49,     3.52,     3.56,    3.62,  3.69,    3.76,    3.82,    3.89],
+];
+
 console.log(
-  interpolate.byInternalTable({
+  Interpolate.byInternalTable({
     x: temperature,
     y: percentage,
-    tableAsDoubleArray: dataObj
+    tableAsDoubleArray: dataObj,
   })
 );
 // 3.982
+```
+
+### getKB
+
+```javascript
+console.log(
+  Interpolate.getKB({
+    x1: 1, y1: 1,
+    x2: 6, y2: 5,
+  })
+);
+// { k: -0.8, b: 1.8 }
 ```
 
 ## Commands

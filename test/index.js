@@ -1,44 +1,38 @@
 import { assert } from 'chai';
-import interpolate from '../src';
+import Immutable from 'immutable';
+
+import { linear, bilinear, byInternalTable, getKB } from '../src';
 
 
 describe(
-  'interpolate test.',
+  'Test for static methods of Interpolate class.',
   () => {
-    // 1
     it(
-      'interpolate.linear',
+      '1. linear',
       () => {
         const expectedVal = 1.5;
 
-        assert(interpolate.linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 }) === expectedVal, 'Fuckup :(');
+        assert(linear({ x:0.5, x1:0, y1:1, x2:1, y2:2 }) === expectedVal, 'Fuckup :(');
       },
     );
 
-    // 2
     it(
-      'interpolate.bilinear',
+      '2. bilinear',
       () => {
-        const expectedVal = 362;
+        const expectedVal = 377.75;
+        const testedVal = bilinear({
+          x: 3, y: 3.5,
+          x1: 1, y1: 1,
+          x2: 6, y2: 5,
+          q11: 400, q12: 410, q21: 210, q22: 590,
+        });
 
-        assert(interpolate.bilinear({
-          x: 3,
-          y: 3.5,
-          x1: 1,
-          y1: 1,
-          x2: 6,
-          y2: 5,
-          q11: 210,
-          q12: 590,
-          q21: 210,
-          q22: 590
-        }) === expectedVal, 'Fuckup :(');
+        assert(testedVal === expectedVal, `Fuckup :( testedVal is ${testedVal}`);
       },
     );
 
-    // 3
     it(
-      'interpolate.byInternalTable',
+      '3. byInternalTable',
       () => {
         const temperature = -21.0;
         const percentage = 20.0;
@@ -51,11 +45,25 @@ describe(
         ];
         const expectedVal = 3.982;
 
-        assert(interpolate.byInternalTable({
+        assert(byInternalTable({
           x: temperature,
           y: percentage,
           tableAsDoubleArray: dataObj,
         }) === expectedVal, 'Fuckup :(');
+      },
+    );
+
+    it(
+      '4. getKB',
+      () => {
+        const expectedObj = Immutable.Map({ k: -0.8, b: 1.8 });
+        const coeffs = getKB({
+          x1: 1, y1: 1,
+          x2: 6, y2: 5,
+        });
+        const testedObj = Immutable.Map(coeffs);
+
+        assert(testedObj.equals(expectedObj), `Fuckup :( coeffs is ${JSON.stringify(coeffs)}`);
       },
     );
   },
