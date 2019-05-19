@@ -19,7 +19,7 @@ _So, you can use methods below_
 
 - [linear](#linear) by `{ x, x1, y1, x2, y2 }`
 - [bilinear](#bilinear) by `{ x, y, x1, y1, x2, y2, q11, q12, q21, q22 }`
-- [byInternalTable](#byInternalTable) by `{ x, y, tableAsDoubleArray }`
+- [byInternalTable](#byInternalTable) by `{ x, y, tableAsDoubleArray }` _TODO: external cases_
 - [getKB](#getKB) (auxiliary) for condition like `y=kx+b` by `{ x1, y1, x2, y2 }`
 
 ### linear
@@ -52,10 +52,10 @@ console.log(
     x: 3, y: 3.5,
     x1: 1, y1: 1,
     x2: 6, y2: 5,
-    q11: 210, q12: 590, q21: 210, q22: 590,
+    q11: 400, q12: 410, q21: 210, q22: 590,
   })
 );
-// 362
+// 377.75
 ```
 
 _This example description_
@@ -63,7 +63,7 @@ _This example description_
           |   q12= 410                q22= 590
 y2= 5     |   o                       o
           |
-          |           q= ? (362 will be found)
+          |           q= ? (377.75 will be found bilinearly)
 y= 3.5    |           o
           |
           |   q11= 400                q21= 210
@@ -76,17 +76,17 @@ And also, you can read more about bilinear interpolation [on wiki](https://ru.wi
 
 ### byInternalTable
 
-_Interpolate by table (only internal table values) for example_
+_Interpolate by table (only internal table values gives correct result) for example_
 
 ```javascript
 const temperature = -21.0;
 const percentage = 20.0;
 /*
   About table below:
-  1st horizontal line (highest row) - temperature conditions template
-  1st vertical column (first left column) - percentage conditions template
+  1st horizontal line (highest row as x axis) - temperature conditions template
+  1st vertical column (first left column as y axis) - percentage conditions template
 */
-const dataObj = [
+const tableAsDoubleArray = [
   [0.0,   -30,      -20.0,    -10.0,    0.0,     20.0,  40.0,    60.0,    80.0,    100.0],
   [0.0,   4.19,     4.19,     4.19,     4.19,    4.19,  4.19,    4.19,    4.19,    4.19],
   [25.0,  3.93000,  3.93000,  3.93,     3.95,    3.98,  4.00,    4.03,    4.05,    4.08],
@@ -98,7 +98,7 @@ console.log(
   Interpolate.byInternalTable({
     x: temperature,
     y: percentage,
-    tableAsDoubleArray: dataObj,
+    tableAsDoubleArray,
   })
 );
 // 3.982

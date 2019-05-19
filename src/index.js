@@ -36,7 +36,6 @@ export default class Interpolate {
       x2, y2: q22,
     });
 
-    // console.log(`bilinear between ${interResult1} & ${interResult2}`);
     return Interpolate.linear({
       x: y,
       x1: y1, y1: interResult1,
@@ -48,25 +47,10 @@ export default class Interpolate {
     /*
       SHORT DESCRIPTION
 
-      tableAsDoubleArray should be realized as:
+      tableAsDoubleArray should be made as:
         head_y  | head_x  | head_x  | ..
         head_y  | value   | value   | ..
         head_y  | value   | value   | ..
-
-      See also this example for tableAsDoubleArray:
-        [
-          [ 0.0,   0.0,  10.0,  20.0],
-          [12.2, 3.977, 3.998, 4.019],
-          [16.0, 3.894, 3.915, 3.936],
-          [19.8, 3.852, 3.873, 3.894]
-        ]
-
-      BUT REMEMBER THAT:
-        Your point should be have place in particular rectangle
-        the first row & column is table headers (not values)
-        |  |  |  |  |  |
-        |  | * * * * * *
-        |  | * Inside  *
     */
     try {
       let i1;
@@ -80,15 +64,23 @@ export default class Interpolate {
       for (j2 = 1; tableAsDoubleArray[0][j2] < x; j2++);
       j1 = j2 - 1;
 
+      // console.log(tableAsDoubleArray[0][j1], tableAsDoubleArray[i1][0]);
+      // console.log(tableAsDoubleArray[0][j2], tableAsDoubleArray[i2][0]);
+
       return Interpolate.bilinear({
-        x, y,
-        x1: tableAsDoubleArray[0][j1], y1: tableAsDoubleArray[i1][0],
-        x2: tableAsDoubleArray[0][j2], y2: tableAsDoubleArray[i2][0],
+        x,
+        y,
+        x1: tableAsDoubleArray[0][j1],
+        y1: tableAsDoubleArray[i1][0],
+        x2: tableAsDoubleArray[0][j2],
+        y2: tableAsDoubleArray[i2][0],
         q11: tableAsDoubleArray[i1][j1],
         q12: tableAsDoubleArray[i1][j2],
         q21: tableAsDoubleArray[i2][j1],
         q22: tableAsDoubleArray[i2][j2],
       });
-    } catch (err) { return 0.0; }
+    } catch (err) {
+      return 0.0;
+    }
   }
 }
