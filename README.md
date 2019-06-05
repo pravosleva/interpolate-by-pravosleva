@@ -20,7 +20,8 @@ _So, you can use methods below_
 - [linear](#linear) by `{ x, x1, y1, x2, y2 }`
 - [bilinear](#bilinear) by `{ x, y, x1, y1, x2, y2, q11, q12, q21, q22 }`
 - [byInternalTable](#byInternalTable) by `{ x, y, tableAsDoubleArray }` _TODO: external cases_
-- [getKB](#getKB) (auxiliary) for condition like `y=kx+b` by `{ x1, y1, x2, y2 }`
+- [getKB](#getKB) for condition like `y = (k * x) + b` by `{ x1, y1, x2, y2 }`
+- [getCommonPointByBisectionMethod](#getCommonPointByBisectionMethod) by `{ fn1, fn2, xMin = -1000, xMax = 1000, eps = 0.001 }`
 
 ### linear
 
@@ -114,6 +115,58 @@ console.log(
   })
 );
 // { k: -0.8, b: 1.8 }
+```
+
+### getCommonPointByBisectionMethod
+
+```javascript
+console.log(
+  Interpolate.getCommonPointByBisectionMethod({
+    fn1: x => x,
+    fn2: x => -x,
+    xMin: -200, // -1000 by default
+    xMax: 200, // 1000 by default
+    eps: 0.001, // 0.001 by default (accuracy)
+    iMax = 1000, // max iterations number
+  })
+);
+// {
+//   error: false,
+//   x: ~0,
+//   y: ~0
+// }
+```
+
+_This example description_
+```
+          |
+y2= 2     o                           o
+          |
+y= ?      |             o
+(~1.5 will be found by bisection method)
+y1= 1     o                           o
+          |
+          ------------------------------------
+          x1= 0         x= ?          x2= 1
+                        (~0.5 will be found by bisection method)
+```
+```javascript
+const const { k: k1, b: b1 } = Interpolate.getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
+const const { k: k2, b: b2 } = Interpolate.getKB({ x1: 0, y1: 2, x2: 1, y2: 1 });
+const fn1 = x => (k1 * x) + b1;
+const fn2 = x => (k2 * x) + b2;
+
+console.log(
+  Interpolate.getCommonPointByBisectionMethod({
+    fn1,
+    fn2,
+  })
+);
+// {
+//   error: false, // & description field if true
+//   x: -0.5002021789550781,
+//   y: 1.5002021789550781,
+// }
 ```
 
 ## Commands

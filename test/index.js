@@ -1,7 +1,13 @@
 import { assert } from 'chai';
 import Immutable from 'immutable';
 
-import { linear, bilinear, byInternalTable, getKB } from '../src';
+import {
+  linear,
+  bilinear,
+  byInternalTable,
+  getKB,
+  getCommonPointByBisectionMethod,
+} from '../src';
 
 
 describe(
@@ -89,6 +95,28 @@ describe(
         const testedObj = Immutable.Map(coeffs);
 
         assert(testedObj.equals(expectedObj), `Fuckup :( coeffs is ${JSON.stringify(coeffs)}`);
+      },
+    );
+
+    it(
+      '5. getCommonPointByBisectionMethod',
+      () => {
+        const expectedObj = Immutable.Map({
+          error: false,
+          x: -0.5002021789550781,
+          y: 1.5002021789550781,
+        });
+        const { k: k1, b: b1 } = getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
+        const { k: k2, b: b2 } = getKB({ x1: 0, y1: 2, x2: 1, y2: 1 });
+        const fn1 = x => (k1 * x) + b1;
+        const fn2 = x => (k2 * x) + b2;
+        const result = getCommonPointByBisectionMethod({
+          fn1,
+          fn2,
+        });
+        const testedObj = Immutable.Map(result);
+
+        assert(testedObj.equals(expectedObj), `Fuckup :( result is ${JSON.stringify(result)}`);
       },
     );
   },

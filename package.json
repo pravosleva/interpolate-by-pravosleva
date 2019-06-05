@@ -1,6 +1,6 @@
 {
   "name": "interpolate-by-pravosleva",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Math approximation tools.",
   "main": "./lib/index.js",
   "scripts": {
@@ -32,7 +32,9 @@
     "среднее",
     "интерполяция",
     "аппроксимация",
-    "среднее"
+    "среднее",
+    "метод",
+    "бисекций"
   ],
   "author": "Den Pol <selection4test@gmail.com>",
   "license": "MIT",
