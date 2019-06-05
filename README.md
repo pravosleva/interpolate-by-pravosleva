@@ -151,8 +151,8 @@ y1= 1     o                           o
                         (~0.5 will be found by bisection method)
 ```
 ```javascript
-const const { k: k1, b: b1 } = Interpolate.getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
-const const { k: k2, b: b2 } = Interpolate.getKB({ x1: 0, y1: 2, x2: 1, y2: 1 });
+const { k: k1, b: b1 } = Interpolate.getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
+const { k: k2, b: b2 } = Interpolate.getKB({ x1: 0, y1: 2, x2: 1, y2: 1 });
 const fn1 = x => (k1 * x) + b1;
 const fn2 = x => (k2 * x) + b2;
 
