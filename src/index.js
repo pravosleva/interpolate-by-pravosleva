@@ -13,7 +13,7 @@ export default class Interpolate {
   }
 
   static getKB({ x1, y1, x2, y2 }) {
-    const k = (y1 - y2) / (x2 - x1);
+    const k = (y2 - y1) / (x2 - x1);
     const b = y1 - (k * x1);
 
     return { k, b };

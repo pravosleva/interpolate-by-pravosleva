@@ -87,7 +87,7 @@ describe(
     it(
       '4. getKB',
       () => {
-        const expectedObj = Immutable.Map({ k: -0.8, b: 1.8 });
+        const expectedObj = Immutable.Map({ k: 0.8, b: 0.19999999999999996 });
         const coeffs = getKB({
           x1: 1, y1: 1,
           x2: 6, y2: 5,
@@ -103,7 +103,7 @@ describe(
       () => {
         const expectedObj = Immutable.Map({
           error: false,
-          x: -0.5002021789550781,
+          x: 0.5002021789550781,
           y: 1.5002021789550781,
         });
         const { k: k1, b: b1 } = getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
