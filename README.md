@@ -17,11 +17,11 @@ import { linear } from 'interpolate-by-pravosleva';
 
 _So, you can use methods below_
 
-- [linear](#linear) by `{ x, x1, y1, x2, y2 }`
-- [bilinear](#bilinear) by `{ x, y, x1, y1, x2, y2, q11, q12, q21, q22 }`
-- [byInternalTable](#byInternalTable) by `{ x, y, tableAsDoubleArray }` _TODO: external cases_
+- [linear](#linear) by `({ x, x1, y1, x2, y2 })`
+- [bilinear](#bilinear) by `({ x, y, x1, y1, x2, y2, q11, q12, q21, q22 })`
+- [byInternalTable](#byInternalTable) by `({ x, y, tableAsDoubleArray }` _TODO: external cases_
 - [getKB](#getKB) for condition like `y = (k * x) + b` by `{ x1, y1, x2, y2 }`
-- [getCommonPointByBisectionMethod](#getCommonPointByBisectionMethod) by `{ fn1, fn2, xMin = -1000, xMax = 1000, eps = 0.001 }`
+- [getCommonPointByBisectionMethod](#getCommonPointByBisectionMethod) by `({ fn1, fn2, xMin = -1000, xMax = 1000, eps = 0.001 })`
 
 ### linear
 
@@ -38,7 +38,7 @@ _This example description_
 y2= 2     |                           o
           |
 y= ?      |             o
-(1.5 will be found in line by x value)
+(1.5 will be found)
 y1= 1     o
           |
           ------------------------------------
@@ -50,10 +50,12 @@ y1= 1     o
 ```javascript
 console.log(
   Interpolate.bilinear ({
-    x: 3, y: 3.5,
-    x1: 1, y1: 1,
-    x2: 6, y2: 5,
-    q11: 400, q12: 410, q21: 210, q22: 590,
+    x1: 1, q11: 400, q12: 410,
+    y1: 1,
+    x2: 6, q21: 210, q22: 590,
+    y2: 5,
+    x: 3,
+    y: 3.5
   })
 );
 // 377.75
@@ -64,7 +66,7 @@ _This example description_
           |   q12= 410                q22= 590
 y2= 5     |   o                       o
           |
-          |           q= ? (377.75 will be found bilinearly)
+          |           q= ? (377.75 will be found)
 y= 3.5    |           o
           |
           |   q11= 400                q21= 210
@@ -114,7 +116,8 @@ console.log(
     x2: 6, y2: 5,
   })
 );
-// { k: -0.8, b: 1.8 }
+// { k: -0.8,
+//   b: 1.8 }
 ```
 
 ### getCommonPointByBisectionMethod
@@ -127,14 +130,12 @@ console.log(
     xMin: -200, // -1000 by default
     xMax: 200, // 1000 by default
     eps: 0.001, // 0.001 by default (accuracy)
-    iMax = 1000, // max iterations number
+    iMax: 1000, // 1000 by default (max iterations number)
   })
 );
-// {
-//   error: false,
+// { error: false,
 //   x: ~0,
-//   y: ~0
-// }
+//   y: ~0 }
 ```
 
 _This example description_
@@ -143,12 +144,12 @@ _This example description_
 y2= 2     o                           o
           |
 y= ?      |             o
-(~1.5 will be found by bisection method)
+(~1.5 will be found)
 y1= 1     o                           o
           |
           ------------------------------------
           x1= 0         x= ?          x2= 1
-                        (~0.5 will be found by bisection method)
+                        (~0.5 will be found)
 ```
 ```javascript
 const { k: k1, b: b1 } = Interpolate.getKB({ x1: 0, y1: 1, x2: 1, y2: 2 });
@@ -162,11 +163,9 @@ console.log(
     fn2,
   })
 );
-// {
-//   error: false, // & description field if true
-//   x: -0.5002021789550781,
-//   y: 1.5002021789550781,
-// }
+// { error: false, // & description field if true
+//   x: 0.5002021789550781,
+//   y: 1.5002021789550781 }
 ```
 
 ## Commands
