@@ -59,9 +59,25 @@ describe(
       },
     );
 
+    it(
+      '3.2. byInternalTable (one y axis line)',
+      () => {
+        const x = 101.0;
+        const y = 3; // Should be set as first y value (= 3)
+        const tableAsDoubleArray = [
+          [-40, -30,  -20.0,  -10.0,  0.0,  20.0, 40.0, 60.0, 80.0, 100.0],
+          [3,   4,    5,      6,      7,    8,    9,    10,   11,   12],
+        ];
+        const expectedVal = 3.982;
+        const testedVal = byInternalTable({ x, y, tableAsDoubleArray });
+
+        assert( testedVal === expectedVal, `Fuckup :( testedVal is ${testedVal}`);
+      },
+    );
+
     /*
     it(
-      '3.2. byInternalTable (external x point)',
+      '3.3. byInternalTable (external x point)',
       () => {
         const temperature = -40.0;
         const percentage = 20.0;

@@ -64,6 +64,11 @@ export default class Interpolate {
       for (j2 = 1; tableAsDoubleArray[0][j2] < x; j2++);
       j1 = j2 - 1;
 
+      // if (!j2) {
+      //   i1 -= 1; i2 = i1;
+      //   j1 -= 1; j2 = j1;
+      // }
+
       // console.log(tableAsDoubleArray[0][j1], tableAsDoubleArray[i1][0]);
       // console.log(tableAsDoubleArray[0][j2], tableAsDoubleArray[i2][0]);
 
