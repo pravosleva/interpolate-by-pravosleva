@@ -1,5 +1,9 @@
 # interpolate-by-pravosleva
 
+## 🚫 DEPRECATED.
+
+Use [math-interpolate](https://www.npmjs.com/package/math-interpolate) instead of (TypeScript support added).
+
 ## Install
 
 ```
